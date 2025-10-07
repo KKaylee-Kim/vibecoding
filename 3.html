@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vibe Coding Spaghetti Bowl - Full Article with Summary</title>
+  <style>
+    :root {
+      --color-bg: #000000;
+      --color-overlay: rgba(0, 0, 0, 0.8);
+      --color-text-primary: #e6e6e6;
+      --color-accent-cyan: #00ffff;
+      --color-accent-magenta: #ff00ff;
+      --color-accent-violet: #8a2be2;
+      --font-stack: 'Fira Code', 'Roboto Mono', monospace;
+      --transition-speed: 0.7s ease;
+      --max-width: 900px;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      line-height: 1.65;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      font-size: 1.15rem;
+    }
+    h1,h2,h3,h4 {
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px var(--color-accent-cyan);
+      margin-bottom: 0.5rem;
+      color: #fefefe;
+      transition: color var(--transition-speed);
+    }
+    h1 { font-size: 3.3rem; }
+    h2 { font-size: 2.3rem; }
+    h3 { font-size: 1.6rem; color: var(--color-accent-magenta);}
+    h4 { font-size: 1.2rem; color: var(--color-accent-violet); margin-bottom: 0.4rem; }
+    p, li {
+      margin-bottom: 1rem;
+      color: var(--color-text-primary);
+      text-shadow: 0 0 8px #000c;
+      max-width: 700px;
+    }
+    a {
+      color: var(--color-accent-magenta);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    a:hover,
+    a:focus {
+      color: var(--color-accent-cyan);
+      text-shadow: 0 0 12px var(--color-accent-cyan);
+      outline: none;
+    }
+    ul {
+      margin-left: 2rem;
+      max-width: 700px;
+    }
+    li {
+      margin-bottom: 0.6rem;
+    }
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80px;
+      height: 100vh;
+      background: var(--color-bg);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.75);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0;
+      z-index: 1100;
+      user-select: none;
+    }
+    #navbar .logo {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 2rem;
+      color: var(--color-accent-magenta);
+      text-shadow: 0 0 14px var(--color-accent-magenta);
+      letter-spacing: 0.02em;
+    }
+    #navbar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    #navbar nav a {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: var(--color-text-primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.15rem 0.3rem;
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+    #navbar nav a:hover,
+    #navbar nav a:focus {
+      color: var(--color-accent-cyan);
+      border-left: 4px solid var(--color-accent-cyan);
+      text-shadow: 0 0 16px var(--color-accent-cyan);
+      outline: none;
+    }
+
+    main {
+      margin-left: 80px;
+      padding-bottom: 6rem;
+      outline-offset: 300px;
+    }
+
+    section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 7rem;
+      color: var(--color-text-primary);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      transition: background-position 0.8s ease;
+      overflow-wrap: break-word;
+    }
+    section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-overlay);
+      z-index: 1;
+      border-radius: 12px;
+    }
+    .content-wrapper {
+      position: relative;
+      max-width: var(--max-width);
+      z-index: 2;
+      padding: 0 1rem;
+      text-shadow: 0 0 8px #000a;
+    }
+    .section-header h2 {
+      border-bottom: 3px solid var(--color-accent-magenta);
+      display: inline-block;
+      padding-bottom: 6px;
+      font-size: 2.4rem;
+      margin-bottom: 1.8rem;
+      filter: drop-shadow(0 0 6px var(--color-accent-magenta));
+    }
+    blockquote {
+      border-left: 5px solid var(--color-accent-magenta);
+      padding-left: 1rem;
+      font-style: italic;
+      font-size: 1.3rem;
+      background: rgba(255, 0, 255, 0.12);
+      box-shadow: 0 0 22px var(--color-accent-magenta);
+      margin: 3rem 0;
+      border-radius: 10px;
+      text-shadow: none;
+      color: var(--color-accent-magenta);
+      max-width: 720px;
+    }
+    #vibe_coding_intro img,
+    #high_of_building img,
+    #system_cracks img,
+    #super_app_illusion img,
+    #lessons img,
+    #cleanup_costs img,
+    #why_happens img,
+    #client_advice img,
+    #conclusion img {
+      max-width: 720px;
+      width: 100%;
+      display: block;
+      margin: 0 0 2rem;
+      border-radius: 12px;
+      border: 3px solid var(--color-accent-violet);
+      box-shadow: 0 0 28px var(--color-accent-magenta);
+    }
+    /* Parallax backgrounds */
+    #vibe_coding_intro {
+      background-image: url("https://media.licdn.com/dms/image/v2/D5612AQHmqjsmEwOhdg/article-cover_image-shrink_720_1280/B56ZlyLxvJI8AM-/0/1758557325972?e=1762387200&v=beta&t=5hy3DY68AbIkftWKl3KgqY1HkZuwceDBzAqbE3lInnY");
+      background-attachment: fixed;
+    }
+    #high_of_building {
+      background-image: url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    #system_cracks {
+      background-image: url("https://images.unsplash.com/photo-1525186402429-18a9c8e4320e?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    #super_app_illusion {
+      background-image: url("https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    #lessons {
+      background-image: url("https://images.unsplash.com/photo-1506765515384-028b60a970df?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    #cleanup_costs {
+      background-image: url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    #why_happens {
+      background-image: url("https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    #client_advice {
+      background-image: url("https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    #conclusion {
+      background-image: url("https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=80");
+      background-attachment: fixed;
+    }
+    /* Source Section */
+    #source_link {
+      background: var(--color-bg);
+      padding: 3rem 1rem 6rem;
+      max-width: var(--max-width);
+      margin: 0 auto 6rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 25px rgba(138,43,226,0.25);
+      border-radius: 14px;
+    }
+    #source_link .source-tab {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--color-bg);
+      border: 2px solid var(--color-accent-magenta);
+      border-radius: 30px;
+      padding: 0.6rem 2rem;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      color: var(--color-accent-magenta);
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 0 14px var(--color-accent-magenta);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      outline-offset: 3px;
+      outline-color: transparent;
+    }
+    #source_link .source-tab:hover,
+    #source_link .source-tab:focus {
+      background-color: rgba(255,0,255,0.15);
+      outline-color: var(--color-accent-magenta);
+      outline-style: solid;
+      outline-width: 2px;
+    }
+    /* Responsive styling */
+    @media (max-width: 980px) {
+      #navbar {
+        width: 60px;
+      }
+      #navbar .logo {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+      }
+      #navbar nav a {
+        font-size: 0.75rem;
+      }
+      main {
+        margin-left: 60px;
+      }
+    }
+    @media (max-width: 720px) {
+      #navbar, main {
+        width: 100%;
+        height: auto;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        box-shadow: none;
+        background: var(--color-bg);
+      }
+      #navbar {
+        flex-direction: row;
+        justify-content: center;
+        padding: 0.5rem 0;
+        height: auto;
+        width: 100%;
+      }
+      #navbar .logo {
+        writing-mode: horizontal-tb;
+        transform: none;
+        margin: 0 1.5rem 0 0;
+        font-size: 1.5rem;
+        color: var(--color-accent-magenta);
+        text-shadow: 0 0 18px var(--color-accent-magenta);
+      }
+      #navbar nav {
+        flex-direction: row;
+        gap: 1rem;
+      }
+      #navbar nav a {
+        writing-mode: horizontal-tb;
+        transform: none;
+        font-size: 0.95rem;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        padding: 0.25rem 0.8rem;
+      }
+      #navbar nav a:hover,
+      #navbar nav a:focus {
+        border-bottom-color: var(--color-accent-cyan);
+        box-shadow: none;
+      }
+      main {
+        margin-left: 0;
+        padding-top: 1rem;
+      }
+      section {
+        min-height: auto;
+        padding: 3rem 1.2rem 4rem;
+        background-attachment: scroll !important;
+        border-radius: 0;
+      }
+      #source_link {
+        box-shadow: none;
+        border-radius: 0;
+        padding-top: 2rem;
+        margin-bottom: 3rem;
+      }
+      #source_link .source-tab {
+        position: static;
+        transform: none;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        padding: 0.7rem 1.5rem;
+        outline-offset: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Sidebar -->
+  <aside id="navbar" aria-label="Primary section navigation">
+    <span class="logo" aria-label="Website logo">VIBE // CODE</span>
+    <nav role="navigation" aria-label="Page sections">
+      <a href="#vibe_coding_intro">Vibe Coding</a>
+      <a href="#high_of_building">High of Building</a>
+      <a href="#system_cracks">Cracks in System</a>
+      <a href="#super_app_illusion">Super App</a>
+      <a href="#lessons">Lessons</a>
+      <a href="#cleanup_costs">Clean-Up Costs</a>
+      <a href="#why_happens">Why Happens</a>
+      <a href="#client_advice">Clients</a>
+      <a href="#conclusion">Conclusion</a>
+      <a href="#source_link">Source</a>
+    </nav>
+  </aside>
+
+  <main tabindex="0">
+    <!-- Section: Vibe Coding Intro with Summary -->
+    <section id="vibe_coding_intro" aria-label="Vibe coding introduction" >
+      <div class="content-wrapper">
+        <img src="https://media.licdn.com/dms/image/v2/D5612AQHmqjsmEwOhdg/article-cover_image-shrink_720_1280/B56ZlyLxvJI8AM-/0/1758557325972?e=1762387200&v=beta&t=5hy3DY68AbIkftWKl3KgqY1HkZuwceDBzAqbE3lInnY" alt="Neon styled cover image for Vibe Coding article, depicting glowing intertwined coding elements" />
+        <h1>Vibe Coding Spaghetti Bowl</h1>
+        <p class="subtitle">Exploring the human-driven, intuitive side of software development and its risks.</p>
+        <p class="note" style="max-width: 680px;">This website summarizes Myra Roldan’s LinkedIn article describing the phenomenon known as “vibe coding”: the tendency for developers to rely on intuition and aesthetics when building software — often at the cost of sustainable architecture. Through a cautionary client story, the article highlights the dangers of rapid, intuition-driven app creation and the critical need for planning, security, and architectural discipline.</p>
+        <p>
+          Vibe coding feels like magic. No code, no waiting on developers. Just you, your idea, and a tool promising drag-and-drop simplicity for rapid creation. But beneath that magic lies risk: broken APIs, security holes, exposed code, and unreliable apps. This story exposes the dark side no one talks about.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: How It Starts -->
+    <section id="high_of_building" aria-label="How it starts - the high of building fast">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=720&q=80" alt="Code appearing on a laptop screen representing fast creation" />
+        <h2>How It Starts: The High of Building Fast</h2>
+        <p>
+          The allure of no-code and AI-assisted tools feels enchanting. Developers and entrepreneurs see their ideas materialize within minutes, bypassing traditional development cycles. This dopamine rush fuels rapid progress and empowerment.
+        </p>
+        <p>
+          However, when speed is the sole focus, foundational questions get ignored:
+        </p>
+        <ul>
+          <li>What problem is being solved?</li>
+          <li>What does the user journey look like?</li>
+          <li>How will data flow through the system?</li>
+          <li>Can it scale from 10 to 100 users gracefully?</li>
+          <li>How are security and code maintainability addressed?</li>
+        </ul>
+        <p>
+          Without introspection, feature bloat ensues, leading to fragile systems built on shaky assumptions.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Cracks in the System -->
+    <section id="system_cracks" aria-label="The cracks in the system">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1525186402429-18a9c8e4320e?auto=format&fit=crop&w=720&q=80" alt="Broken connection cables symbolizing system cracks and fragility" />
+        <h2>The Cracks in the System</h2>
+        <p>
+          Partial functionality often masks deeper problems. The client’s app worked “kind of,” but unseen flaws compromised reliability, scalability, and security.
+        </p>
+        <ul>
+          <li><strong>Scalability stalls:</strong> Performance degraded rapidly with user growth.</li>
+          <li><strong>Spaghetti workflows:</strong> Unstructured logic piled without clear architecture.</li>
+          <li><strong>Single points of failure:</strong> Critical undocumented components threatened entire operation.</li>
+          <li><strong>Security gaps:</strong> Permissions and sensitive info were dangerously lax.</li>
+          <li><strong>Integration chaos:</strong> Updates unpredictably broke chained processes.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section: Super App Illusion -->
+    <section id="super_app_illusion" aria-label="The illusion of a super app">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=720&q=80" alt="Conceptual image of a fragile super app represented as a cracked interface" />
+        <h2>The Illusion of a “Super App”</h2>
+        <p>
+          The desire to create an all-in-one solution is widespread, but monolithic “super apps” built without modular design are fragile. Traditional engineering emphasizes decomposition into smaller, manageable components to safeguard stability.
+        </p>
+        <p>
+          The client’s super app became a single point of failure — a crash meant business stoppage.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Lessons No One Wants to Hear -->
+    <section id="lessons" aria-label="Lessons no one wants to hear">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1506765515384-028b60a970df?auto=format&fit=crop&w=720&q=80" alt="Coding notes and architecture sketches" />
+        <h2>The Lessons No One Wants to Hear</h2>
+        <p>
+          Vibe coding itself isn’t the problem — neglecting fundamental software engineering principles is. Before coding, the following are essential:
+        </p>
+        <ul>
+          <li>Clearly define the problem.</li>
+          <li>Create a system architecture blueprint.</li>
+          <li>Plan for scalability and fault tolerance.</li>
+          <li>Map security policies and governance upfront.</li>
+          <li>Conduct “what if” scenarios for resilience.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section: Clean-Up Costs More -->
+    <section id="cleanup_costs" aria-label="The clean-up costs more than the build">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=720&q=80" alt="Developer debugging tangled messy code" />
+        <h2>The Clean-Up Costs More Than the Build</h2>
+        <p>
+          Post-mortem fixes for haphazard vibe-coded projects incur heavy costs — rebuilding workflows, migrating inconsistent data, patching security flaws, staff retraining, and documentation creation.
+        </p>
+        <p>
+          A solid, well-planned solution is faster and cheaper upfront than cleaning a mess cut loose by haste.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Why This Keeps Happening -->
+    <section id="why_happens" aria-label="Why this keeps happening">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=720&q=80" alt="Confident developer with reflected code on face, illustrating misplaced confidence" />
+        <h2>Why This Keeps Happening</h2>
+        <p>
+          Vibe coding democratizes creation, empowering non-traditional builders, which is positive. However, the illusion that “fast = sustainable” leads to oversights in architecture and governance. 
+        </p>
+        <p>
+          Misplaced confidence, not bad intent, causes fragile systems to emerge repeatedly.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: What I Tell Clients -->
+    <section id="client_advice" aria-label="Advice for clients">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=720&q=80" alt="Collaboration meeting with developers discussing plans" />
+        <h2>What I Tell Clients</h2>
+        <p>
+          I don’t recommend starting over — creativity and speed are strengths. However, clients must:
+        </p>
+        <ul>
+          <li>Preserve their creative spark.</li>
+          <li>Incorporate fundamental software discipline.</li>
+          <li>Build modularly, in phases.</li>
+          <li>Plan exit/migration strategies for platforms.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section: The Bigger Picture -->
+    <section id="conclusion" aria-label="Conclusion and bigger picture">
+      <div class="content-wrapper">
+        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=720&q=80" alt="Futuristic glowing code landscape conceptual image" />
+        <h2>The Bigger Picture</h2>
+        <p>
+          Vibe coding changes who gets to build software, which is revolutionary. But without reckoning with risks, many will build on unstable ground. 
+        </p>
+        <p>
+          True innovation balances speed with durability. Pause to plan before the first drag and drop — or prepare for costly cleanups later.
+        </p>
+      </div>
+    </section>
+
+    <!-- Source Section -->
+    <section id="source_link" aria-label="Source section">
+      <a class="source-tab" href="https://www.linkedin.com/pulse/vibe-coding-spaghetti-bowl-myra-roldan-chief-ai-officer-fractional-dbc7c/?trackingId=EhkAeuhiTdWnN6u%2FUH8KpQ%3D%3D" 
+         target="_blank" rel="noopener noreferrer" aria-label="Open the LinkedIn article source in new tab" tabindex="0">
+        SOURCE
+      </a>
+      <div class="content-wrapper" style="max-width: 640px; margin: 6rem auto 3rem;">
+        <h2>Original Article Source</h2>
+        <p>This presentation summarizes the full article by Myra Roldan on Vibe Coding and its impact on software quality.</p>
+        <p>
+          For full details, visit the original LinkedIn article: 
+          <a href="https://www.linkedin.com/pulse/vibe-coding-spaghetti-bowl-myra-roldan-chief-ai-officer-fractional-dbc7c/?trackingId=EhkAeuhiTdWnN6u%2FUH8KpQ%3D%3D" target="_blank" rel="noopener noreferrer" tabindex="0">
+            Vibe Coding Spaghetti Bowl by Myra Roldan
+          </a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sections = document.querySelectorAll("section");
+      // Parallax backgrounds
+      function parallax() {
+        sections.forEach(section => {
+          if (section.id) {
+            const rect = section.getBoundingClientRect();
+            if(rect.top < window.innerHeight && rect.bottom > 0){
+              let offsetY = -(rect.top * 0.25);
+              section.style.backgroundPosition = `center calc(50% + ${offsetY}px)`;
+            }
+          }
+        });
+      }
+      window.addEventListener("scroll", parallax);
+      parallax();
+
+      // Fade-in on scroll animation using IntersectionObserver
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {threshold: 0.15});
+      
+      sections.forEach(s => observer.observe(s));
+    });
+  </script>
+</body>
+</html>
